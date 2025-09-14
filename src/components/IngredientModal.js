@@ -13,7 +13,7 @@ const IngredientModal = ({ dish, onClose }) => {
             onClick={onClose}
             className="text-gray-500 hover:text-gray-700 text-xl"
           >
-            ×
+            X
           </button>
         </div>
 
@@ -42,8 +42,22 @@ const IngredientModal = ({ dish, onClose }) => {
             </div>
             
             {/* Dish Image */}
-            <div className="w-24 h-24 bg-gray-200 rounded-lg ml-4 flex items-center justify-center flex-shrink-0">
-              <span className="text-gray-400 text-xs">No Image</span>
+            <div className="modal-dish-image ml-4 flex-shrink-0">
+              {dish.image ? (
+                <img 
+                  src={dish.image} 
+                  alt={dish.name}
+                  className="modal-image-img"
+                  onError={(e) => {
+                    // Fallback to placeholder if image fails to load
+                    e.target.style.display = 'none';
+                    e.target.nextSibling.style.display = 'flex';
+                  }}
+                />
+              ) : null}
+              <div className="modal-image-placeholder" style={{ display: dish.image ? 'none' : 'flex' }}>
+                <span className="text-gray-400 text-xs">No Image</span>
+              </div>
             </div>
           </div>
         </div>

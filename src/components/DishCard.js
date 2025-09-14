@@ -2,59 +2,60 @@ import React from 'react';
 
 const DishCard = ({ dish, onAddDish, onRemoveDish, isSelected, onViewIngredients }) => {
   return (
-    <div className="bg-white dish-card rounded-lg shadow-sm p-4">
-      <div className="flex items-start space-x-4">
-        {/* Dish Image */}
-        <div className="w-16 h-16 bg-gray-200 rounded-lg flex items-center justify-center flex-shrink-0">
-          <span className="text-gray-400 text-xs">No Image</span>
+    <div className="dish-card-name">
+      <div className="dish-content">
+
+        {/* Left side - Dish Details */}
+        <div className="dish-info">
+            
+          <h3 className="dish-name-new">
+            {dish.name}
+            {/* Diet indicator */}
+            <span className={`diet-indicator ${dish.type === 'VEG' ? 'veg' : 'non-veg'}`}>
+              {dish.type === 'VEG' ? <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-leaf" viewBox="0 0 16 16">
+  <path d="M1.4 1.7c.216.289.65.84 1.725 1.274 1.093.44 2.884.774 5.834.528l.37-.023c1.823-.06 3.117.598 3.956 1.579C14.16 6.082 14.5 7.41 14.5 8.5c0 .58-.032 1.285-.229 1.997q.198.248.382.54c.756 1.2 1.19 2.563 1.348 3.966a1 1 0 0 1-1.98.198c-.13-.97-.397-1.913-.868-2.77C12.173 13.386 10.565 14 8 14c-1.854 0-3.32-.544-4.45-1.435-1.125-.887-1.89-2.095-2.391-3.383C.16 6.62.16 3.646.509 1.902L.73.806zm-.05 1.39c-.146 1.609-.008 3.809.74 5.728.457 1.17 1.13 2.213 2.079 2.961.942.744 2.185 1.22 3.83 1.221 2.588 0 3.91-.66 4.609-1.445-1.789-2.46-4.121-1.213-6.342-2.68-.74-.488-1.735-1.323-1.844-2.308-.023-.214.237-.274.38-.112 1.4 1.6 3.573 1.757 5.59 2.045 1.227.215 2.21.526 3.033 1.158.058-.39.075-.782.075-1.158 0-.91-.288-1.988-.975-2.792-.626-.732-1.622-1.281-3.167-1.229l-.316.02c-3.05.253-5.01-.08-6.291-.598a5.3 5.3 0 0 1-1.4-.811"/>
+</svg> : '🔴'}
+            </span>
+          </h3>
+          
+          <p className="dish-description-new">
+            {dish.description}... <span className="read-more">Read more</span>
+          </p>
+          
+          <button
+            onClick={() => onViewIngredients(dish)}
+            className="ingredient-btn-new"
+          >
+            🥄 Ingredient
+          </button>
         </div>
 
-        {/* Dish Details */}
-        <div className="flex-1">
-          <div className="flex items-start justify-between">
-            <div>
-              <h3 className="font-semibold text-gray-800">{dish.name}</h3>
-              <p className="text-sm text-gray-600 mt-1">{dish.description}</p>
-              <div className="flex items-center mt-2 space-x-2">
-                <span className={`text-xs px-2 py-1 rounded ${
-                  dish.type === 'VEG' ? 'bg-green-100 text-green-600' : 'bg-red-100 text-red-600'
-                }`}>
-                  {dish.type}
-                </span>
-              </div>
+        {/* Right side - Image and Button */}
+        <div className="dish-image-section">
+          <div className="dish-image-new">
+            {dish.image ? (
+              <img 
+                src={dish.image} 
+                alt={dish.name}
+                className="dish-image-img"
+                onError={(e) => {
+                  // Fallback to emoji if image fails to load
+                  e.target.style.display = 'none';
+                  e.target.nextSibling.style.display = 'flex';
+                }}
+              />
+            ) : null}
+            <div className="food-placeholder" style={{ display: dish.image ? 'none' : 'flex' }}>
+              <span className="food-emoji">🍛</span>
             </div>
           </div>
           
-          {/* Action Buttons */}
-          <div className="flex items-center justify-between mt-3">
-            <button
-              onClick={() => onViewIngredients(dish)}
-              className="text-orange-500 text-sm font-medium"
-            >
-              🥄 Ingredient
-            </button>
-            
-            <button
-              onClick={() => isSelected ? onRemoveDish(dish.id) : onAddDish(dish.id)}
-              className={`px-4 py-1 rounded-full text-sm font-medium ${
-                isSelected
-                  ? 'bg-red-500 text-white'
-                  : 'bg-green-500 text-white'
-              }`}
-            >
-              {isSelected ? (
-                <>
-                  <span className="inline-block mr-1">−</span>
-                  Remove
-                </>
-              ) : (
-                <>
-                  <span className="inline-block mr-1">+</span>
-                  Add +
-                </>
-              )}
-            </button>
-          </div>
+          <button
+            onClick={() => isSelected ? onRemoveDish(dish.id) : onAddDish(dish.id)}
+            className={`action-btn-new ${isSelected ? 'remove-btn-new' : 'add-btn-new'}`}
+          >
+            {isSelected ? 'Remove' : 'Add +'}
+          </button>
         </div>
       </div>
     </div>

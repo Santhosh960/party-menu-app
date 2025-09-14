@@ -4,6 +4,8 @@ import { dishes } from './data/mockDishes';
 import Filters from './components/Filters';
 import DishList from './components/DishList';
 import IngredientModal from './components/IngredientModal';
+import MobileStatusBar from './components/MobileStatusBar';
+
 
 const App = () => {
   // State variables
@@ -56,6 +58,8 @@ const App = () => {
 
   return (
     <div className="app-container body max-w-md mx-auto bg-gray-50 min-h-screen">
+      {/* Add Mobile Status Bar */}
+      <MobileStatusBar />
       {/* Filters Component */}
       <Filters
         activeCategory={selectedCategory}
